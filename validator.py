@@ -4,6 +4,7 @@
 from google import genai
 from google.genai import types
 import csv
+import re
 
 # Get all tokens from tokens.txt
 def get_tokens(file_path):
@@ -46,6 +47,9 @@ def generate(token):
     except Exception as e:
         err = str(e).replace("\n", "\\n")
         print(f"  Error: {err}", "-" * 20, sep="\n")
+        # replace 'api_key:[^']+?' by *** for err string
+        err = re.sub(r"'api_key:[^']+?'", '***', err)
+
     return response_text, err
 
 output_list = []
